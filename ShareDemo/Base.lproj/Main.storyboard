@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,12 +17,69 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggL-VG-rIm">
+                                <rect key="frame" x="120" y="229" width="360" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93706736482471775" green="0.91139521576536986" blue="0.88401887233420928" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="分享文字">
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareTextAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4WK-yA-7gg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRU-4D-rAS">
+                                <rect key="frame" x="120" y="269" width="360" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93706736482471775" green="0.91139521576536986" blue="0.88401887233420928" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="分享图片"/>
+                                <connections>
+                                    <action selector="sharePicAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RJr-SW-eUy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FTX-Kv-Ihu">
+                                <rect key="frame" x="120" y="309" width="360" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93706736482471775" green="0.91139521576536986" blue="0.88401887233420928" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="分享网页"/>
+                                <connections>
+                                    <action selector="shareWebpageAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E0U-yq-3WV"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="FTX-Kv-Ihu" secondAttribute="trailing" constant="100" id="6Rb-1O-XxL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ggL-VG-rIm" secondAttribute="trailing" constant="100" id="8JY-gH-SqV"/>
+                            <constraint firstItem="TRU-4D-rAS" firstAttribute="top" secondItem="ggL-VG-rIm" secondAttribute="bottom" constant="10" id="O6e-rE-4ad"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="134" id="Om2-C4-Wix"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="180" id="Snx-AL-SPf"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="100" id="TFT-Hj-095"/>
+                            <constraint firstItem="TRU-4D-rAS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="100" id="Xut-uZ-HYS"/>
+                            <constraint firstItem="FTX-Kv-Ihu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="100" id="ZRQ-zg-l7g"/>
+                            <constraint firstItem="FTX-Kv-Ihu" firstAttribute="top" secondItem="TRU-4D-rAS" secondAttribute="bottom" constant="10" id="bBc-Kh-7Vg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ggL-VG-rIm" secondAttribute="trailing" constant="180" id="kDz-U2-Yrg"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="209" id="kk6-dz-HE7"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="209" id="qZZ-hz-t9X"/>
+                            <constraint firstItem="ggL-VG-rIm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="209" id="wE5-Ox-xuP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TRU-4D-rAS" secondAttribute="trailing" constant="100" id="yzv-bv-0PC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Om2-C4-Wix"/>
+                                <exclude reference="Snx-AL-SPf"/>
+                                <exclude reference="kDz-U2-Yrg"/>
+                                <exclude reference="kk6-dz-HE7"/>
+                                <exclude reference="qZZ-hz-t9X"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="543" y="404"/>
         </scene>
     </scenes>
 </document>

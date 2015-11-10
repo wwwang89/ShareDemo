@@ -24,4 +24,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)shareTextAction:(id)sender {
+    
+    
+}
+
+- (IBAction)sharePicAction:(id)sender {
+    
+    
+}
+
+
+- (IBAction)shareWebpageAction:(id)sender {
+    
+}
+
+
 @end
