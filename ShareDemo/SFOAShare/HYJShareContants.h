@@ -1,9 +1,9 @@
 //
-//  SouFunShareContants.h
-//  SouFunManager
+//  HYJShareContants.h
+//  HYJManager
 //
 //  Created by huyujin on 15/10/29.
-//  Copyright © 2015年 SouFun. All rights reserved.
+//  Copyright © 2015年 HYJ. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -30,30 +30,30 @@
 #define QQAppID                 @"1104934496"
 
 
-typedef NS_ENUM(NSUInteger, SouFunShareType) {
-    SFShareTypeDefault = 0,           /**< 默认  */
-    SFShareTypeSinaWeiBo = 1,         /**< 新浪微博 */
-    SFShareTypeWeixinSession = 2,     /**< 微信好友 */
-    SFShareTypeWeixinTimeline = 3,    /**< 微信朋友圈 */
-    SFShareTypeQQFriend = 4,          /**< QQ好友 */
-    SFShareTypeQQZone = 5,            /**< QQ空间 */
-    SFShareTypeSMS = 6,               /**< 短信 */
-    SFShareTypeMail = 7,              /**< 邮件 */
-    SFShareTypeCopyLink = 8           /**< 复制链接 */
+typedef NS_ENUM(NSUInteger, HYJShareType) {
+    HYJShareTypeDefault = 0,           /**< 默认  */
+    HYJShareTypeSinaWeiBo = 1,         /**< 新浪微博 */
+    HYJShareTypeWeixinSession = 2,     /**< 微信好友 */
+    HYJShareTypeWeixinTimeline = 3,    /**< 微信朋友圈 */
+    HYJShareTypeQQFriend = 4,          /**< QQ好友 */
+    HYJShareTypeQQZone = 5,            /**< QQ空间 */
+    HYJShareTypeSMS = 6,               /**< 短信 */
+    HYJShareTypeMail = 7,              /**< 邮件 */
+    HYJShareTypeCopyLink = 8           /**< 复制链接 */
 };
 
-typedef NS_ENUM(NSUInteger, SouFunResponseState) {
-    SFShareResponseStateSuccess = 1, /**< 成功 */
-    SFShareResponseStateFail = 2,    /**< 失败 */
-    SFShareResponseStateCancel = 3   /**< 取消 */
+typedef NS_ENUM(NSUInteger, HYJResponseState) {
+    HYJShareResponseStateSuccess = 1, /**< 成功 */
+    HYJShareResponseStateFail = 2,    /**< 失败 */
+    HYJShareResponseStateCancel = 3   /**< 取消 */
 };
 
 
-typedef NS_ENUM(NSUInteger, SouFunShareModelType) {
-    SFShareModelText = 1,        /**< 纯文字 */
-    SFShareModelPic = 2,         /**< 图片 */
-    SFShareModelWebpage = 3,     /**< 网页 */
-    SFShareModelVideo = 4        /**< 视频 */
+typedef NS_ENUM(NSUInteger, HYJShareModelType) {
+    HYJShareModelText = 1,        /**< 纯文字 */
+    HYJShareModelPic = 2,         /**< 图片 */
+    HYJShareModelWebpage = 3,     /**< 网页 */
+    HYJShareModelVideo = 4        /**< 视频 */
 };
 
 

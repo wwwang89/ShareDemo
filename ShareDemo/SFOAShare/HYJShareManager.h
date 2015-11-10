@@ -104,18 +104,18 @@
 @end
 
 
-/** 短信分享manager~
- *
- */
-
-@interface HYJSMSShareManager : NSObject <MFMessageComposeViewControllerDelegate>
-
-@property (nonatomic,weak) id<HYJShareManagerDelegate> delegate;
-
-
-- (void)shareSMSWithDataModel:(HYJShareModel *)shareModel;
-
-@end
+///** 短信分享manager~
+// *
+// */
+//
+//@interface HYJSMSShareManager : NSObject <MFMessageComposeViewControllerDelegate>
+//
+//@property (nonatomic,weak) id<HYJShareManagerDelegate> delegate;
+//
+//
+//- (void)shareSMSWithDataModel:(HYJShareModel *)shareModel;
+//
+//@end
 
 
 

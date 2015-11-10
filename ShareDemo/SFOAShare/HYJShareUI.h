@@ -46,4 +46,7 @@
 //
 + (UIImage *)compressImage:(UIImage *)image toMaxFileSize:(NSInteger)maxFileSize;
 
+//
++ (void)showToastViewWithContent:(NSString *)content andRect:(CGRect)rect andTime:(float)time andObjectView:(UIView *)parentView;
+
 @end

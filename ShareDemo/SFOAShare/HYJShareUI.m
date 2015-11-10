@@ -7,9 +7,7 @@
 //
 
 #import "HYJShareUI.h"
-#import "SFPublicMethod.h"
-#import "Macro.h"
-#import "SFUtilityHelper.h"
+#import "HYJHelper.h"
 
 #define ShareButtonMargin (kScreenViewWidth-4*kShareButtonWidth)/5
 
@@ -23,16 +21,15 @@ static const NSInteger kShareButtonWidth = 60;                 // 图标宽度~
 static const NSInteger kShareButtonHeight = kShareButtonWidth; // 图标高度~
 static const NSInteger kShareIconDescHeight = 20;              // 图标文字高度~
 static const NSInteger kShateSeperateLineMargin = 9;
-//static const NSInteger kShareButtonPadding = 27;               //
 
 
 /**
  * 30 + (65+25+5) + 50
  * 40
- * 65+25+5 = 95 
+ * 65+25+5 = 95
  * 10
- * 10 
- * 95 
+ * 10
+ * 95
  * 50
  */
 @interface HYJShareUI()<UIScrollViewDelegate,UIGestureRecognizerDelegate>
@@ -71,16 +68,16 @@ static const NSInteger kShateSeperateLineMargin = 9;
         //初始化字典~
         _shareDic = @{@1:@"新浪微博",@2:@"微信好友",@3:@"朋友圈",@4:@"手机QQ",@5:@"QQ空间",@6:@"短信",@7:@"邮件",@8:@"复制链接"};
     }
-
+    
     return self;
 }
 
 
 - (void)createShareWindowWithFirstShareTypes:(NSArray *)firstShareTypes FirstRowNormalImages:(NSArray *)firstRowNormalImages FirstRowHighlightImages:(NSArray *)firstRowHighlightImages
                             SecondShareTypes:(NSArray *)secondShareTypes SecondRowNormalImages:(NSArray *)secondRowNormalImages SecondRowHighlightImages:(NSArray *)secondRowHighlightImages {
-
+    
     //进入后台，分享栏消除~
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelAction) name:KApplicationDidEnterBackground object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelAction) name:@"KApplicationDidEnterBackground" object:nil];
     
     //分享窗口背景view:
     UIView *shareWindowBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenViewWidth, kScreenViewHeight)];
@@ -95,18 +92,19 @@ static const NSInteger kShateSeperateLineMargin = 9;
     //
     UIView *shareWindow = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenViewHeight, kScreenViewWidth, kShareWindowHeight)];
     _shareWindow = shareWindow;
-    _shareWindow.backgroundColor = SFColor(@"#f0f0f0");
+    
+    _shareWindow.backgroundColor = [HYJHelper colorWithHexString:@"#f0f0f0"];;
     [_shareWindowBackView addSubview:_shareWindow];
     
     UIView *shareWindowArea = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.shareWindow.frame.size.width, self.shareWindow.frame.size.height-kShareCancelButtonHeight)];
     _shareWindowArea = shareWindowArea;
-    _shareWindowArea.backgroundColor =SFColor(@"#f0f0f0");
+    _shareWindowArea.backgroundColor =[HYJHelper colorWithHexString:@"#f0f0f0"];;
     _shareWindowArea.layer.cornerRadius = 2;
     [_shareWindow addSubview:_shareWindowArea];
     
     UILabel *shareTitleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, _shareWindowArea.frame.size.width, 20)];
     shareTitleLbl.text = @"分享到";
-    shareTitleLbl.textColor = [SFUtilityHelper colorWithHexString:@"#333333"];
+    shareTitleLbl.textColor = [HYJHelper colorWithHexString:@"#333333"];
     shareTitleLbl.textAlignment = NSTextAlignmentCenter;
     shareTitleLbl.font = [UIFont systemFontOfSize:17.0f];
     [_shareWindowArea addSubview:shareTitleLbl];
@@ -119,8 +117,8 @@ static const NSInteger kShateSeperateLineMargin = 9;
     CGFloat yPosition = self.secondShareView.frame.origin.y+self.secondShareView.frame.size.height+kShateSeperateLineMargin*2;
     cancelBtn.frame = CGRectMake(0, yPosition, _shareWindow.frame.size.width, kShareWindowHeight-yPosition);
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[SFUtilityHelper colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-    cancelBtn.backgroundColor = SFColor(@"ffffff");
+    [cancelBtn setTitleColor:[HYJHelper colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    cancelBtn.backgroundColor = [HYJHelper colorWithHexString:@"#ffffff"];
     cancelBtn.layer.cornerRadius = 2;
     [cancelBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     cancelBtn.tag = kCancelButtonTag;
@@ -266,7 +264,7 @@ static const NSInteger kShateSeperateLineMargin = 9;
     [textLabel setBackgroundColor:[UIColor clearColor]];
     [textLabel setText:text];
     [textLabel setFont:[UIFont systemFontOfSize:fontSize]];
-    [textLabel setTextColor:[SFUtilityHelper colorWithHexString:colorStr]];
+    [textLabel setTextColor:[HYJHelper colorWithHexString:colorStr]];
     [aView addSubview:textLabel];
     [textLabel setTextAlignment:NSTextAlignmentCenter];
     
@@ -303,6 +301,57 @@ static const NSInteger kShateSeperateLineMargin = 9;
     
     UIImage *compressedImage = [UIImage imageWithData:imageData];
     return compressedImage;
+}
+
+//在某个view上面加一个toast提示
++ (void)showToastViewWithContent:(NSString *)content andRect:(CGRect)rect andTime:(float)time andObjectView:(UIView *)parentView {
+    if ([parentView viewWithTag:1234554321]) {
+        UIView * tView = [parentView viewWithTag:1234554321];
+        [tView removeFromSuperview];
+    }
+    
+    UIImageView * toastView = [[UIImageView alloc] initWithFrame:rect];
+    
+    NSString *imageName = [NSString stringWithFormat:@"toastBackImage.png"];
+    
+    if ([[[UIDevice currentDevice]systemVersion ] floatValue]>=7.0) {
+        imageName = [NSString stringWithFormat:@"toastBackImage_ios7.png"];
+    }
+    
+    
+    if ([UIImage imageNamed:imageName]) {
+        [toastView setImage:[[UIImage imageNamed:imageName] stretchableImageWithLeftCapWidth:10 topCapHeight:10]];
+    }else{
+        [toastView setBackgroundColor:[UIColor blackColor]];
+    }
+    
+    [toastView.layer setCornerRadius:5.0f];
+    [toastView.layer setMasksToBounds:YES];
+    [toastView setAlpha:1.0f];
+    [toastView setTag:1234554321];
+    [parentView addSubview:toastView];
+    
+    
+    CGSize labelSize = [content sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize: CGSizeMake( rect.size.width ,MAXFLOAT) lineBreakMode: NSLineBreakByWordWrapping];
+    //UILabel * contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, rect.size.width-20, labelSize.height)];
+    //UILabel * contentLabel = [[UILabel alloc] initWithFrame:toastView.bounds];
+    if (labelSize.height > rect.size.height) {
+        [toastView setFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, labelSize.height)];
+    }
+    UILabel * contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, toastView.frame.size.width - 20, toastView.frame.size.height)];
+    [contentLabel setText:content];
+    [contentLabel setTextColor:[UIColor whiteColor]];
+    [contentLabel setFont:[UIFont systemFontOfSize:14.0f]];
+    [contentLabel setTextAlignment:NSTextAlignmentCenter];
+    [contentLabel setBackgroundColor:[UIColor clearColor]];
+    [contentLabel setNumberOfLines:0];
+    [contentLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [toastView addSubview:contentLabel];
+    
+    if (time>0.01) {
+        [self performSelector:@selector(removeToastViewFromParentView:) withObject:parentView afterDelay:time];
+    }
+    
 }
 
 

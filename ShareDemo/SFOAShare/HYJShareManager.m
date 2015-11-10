@@ -8,7 +8,6 @@
 #import "HYJShareManager.h"
 #import "HYJShareModel.h"
 #import "HYJShareUI.h"
-#import "UIToastView.h"
 #import "AppDelegate.h"
 
 
@@ -26,7 +25,7 @@
 @property (nonatomic, strong) HYJSinaWeiBoShareManager *weiBoShareManager;
 @property (nonatomic, strong) HYJWeChatShareManager *weChatShareManager;
 @property (nonatomic, strong) HYJQQShareManager *qqShareManager;
-@property (nonatomic, strong) HYJSMSShareManager *smsShareManager;
+//@property (nonatomic, strong) HYJSMSShareManager *smsShareManager;
 
 @end
 
@@ -97,9 +96,9 @@
     self.qqShareManager = qqShareManager;
     
     //
-    HYJSMSShareManager *smsShareManager = [[HYJSMSShareManager alloc] init];
-    smsShareManager.delegate = self;
-    self.smsShareManager = smsShareManager;
+//    HYJSMSShareManager *smsShareManager = [[HYJSMSShareManager alloc] init];
+//    smsShareManager.delegate = self;
+//    self.smsShareManager = smsShareManager;
     
 }
 
@@ -129,41 +128,41 @@
     
     //根据不同的平台走不同的分享方式~
     switch (shareType) {
-        case SFShareTypeSinaWeiBo: //新浪微博
+        case HYJShareTypeSinaWeiBo: //新浪微博
         {
             [self.weiBoShareManager shareWeiBoWithDataModel:self.dataModel];
             break;
         }
-        case SFShareTypeWeixinSession: //微信好友
-        case SFShareTypeWeixinTimeline: //微信朋友圈
+        case HYJShareTypeWeixinSession: //微信好友
+        case HYJShareTypeWeixinTimeline: //微信朋友圈
         {
             //
-            int scene = shareType==SFShareTypeWeixinSession ? WXSceneSession:WXSceneTimeline;
+            int scene = shareType==HYJShareTypeWeixinSession ? WXSceneSession:WXSceneTimeline;
             [self.weChatShareManager shareWeChatWithDataModel:self.dataModel inScene:scene];
             break;
         }
-        case SFShareTypeQQFriend:
-        case SFShareTypeQQZone:
+        case HYJShareTypeQQFriend:
+        case HYJShareTypeQQZone:
         {
             [self.qqShareManager shareQQWithDataModel:self.dataModel shareType:shareType];
             
             break;
         }
-        case SFShareTypeSMS:
-            [self.smsShareManager shareSMSWithDataModel:self.dataModel];
+        case HYJShareTypeSMS:
+//            [self.smsShareManager shareSMSWithDataModel:self.dataModel];
             break;
-        case SFShareTypeCopyLink: //复制链接
+        case HYJShareTypeCopyLink: //复制链接
         {
             //直接做处理
             UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
             pasteBoard.string = self.dataModel.text==nil ? @"":self.dataModel.text;
             //
             UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            [UIToastView showToastViewWithContent:@"链接已复制" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+            [HYJShareUI showToastViewWithContent:@"链接已复制" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
             break;
         }
         default:
-            SFLogDebug(@"error shareType~");
+            NSLog(@"error shareType~");
             break;
     }
 
@@ -172,17 +171,17 @@
 #pragma mark - HYJShareManagerDelegate
 // HYJShareManagerDelegate 根据分享返回的结果进行后续操作
 - (void)didReceiveShareResponse:(HYJShareResponse *)response {
-    SFLogDebug(@"%@",response);
+    NSLog(@"%@",response);
     //分享数据模型清理~~~
     self.dataModel = nil;
     //~~~弹出提示框~~~
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    if (response.responseState== SFShareResponseStateSuccess) {
-        [UIToastView showToastViewWithContent:@"分享成功" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
-    }else if (response.responseState== SFShareResponseStateCancel) {
-        [UIToastView showToastViewWithContent:@"分享取消" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+    if (response.responseState== HYJShareResponseStateSuccess) {
+        [HYJShareUI showToastViewWithContent:@"分享成功" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+    }else if (response.responseState== HYJShareResponseStateCancel) {
+        [HYJShareUI showToastViewWithContent:@"分享取消" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
     }else {
-        [UIToastView showToastViewWithContent:@"分享失败" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+        [HYJShareUI showToastViewWithContent:@"分享失败" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
     }
 }
 
@@ -212,7 +211,7 @@
     WBMessageObject *message = [WBMessageObject message];
     
     switch (shareModel.modelType) {
-        case SFShareModelText:
+        case HYJShareModelText:
             //长度小于140个汉字
             if (shareModel.text.length>=140) {
                 shareModel.text = [shareModel.text substringToIndex:139];
@@ -220,7 +219,7 @@
             message.text = shareModel.text;
             
             break;
-        case SFShareModelPic:
+        case HYJShareModelPic:
         {
             HYJShareImageModel *imageModel = (HYJShareImageModel *)shareModel.mediaModel;
             if (imageModel.imageData) {
@@ -236,7 +235,7 @@
             }
             break;
         }
-        case SFShareModelWebpage:
+        case HYJShareModelWebpage:
         {
             HYJShareWebPageModel *webpageModel = (HYJShareWebPageModel *)shareModel.mediaModel;
             if (webpageModel.webpageUrl) {
@@ -250,7 +249,7 @@
             }
             break;
         }
-        case SFShareModelVideo:
+        case HYJShareModelVideo:
         {
             HYJShareVideoModel *videoModel = (HYJShareVideoModel *)shareModel.mediaModel;
             if (videoModel.videoUrl) {
@@ -270,7 +269,7 @@
 
 - (void)showToast:(NSString *)message {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [UIToastView showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+    [HYJShareUI showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
 }
 
 
@@ -297,20 +296,20 @@
         
         WBBaseResponse *res = (WBSendMessageToWeiboResponse *)response;
         if(res.statusCode == WeiboSDKResponseStatusCodeSuccess) {
-            shareResponse.responseState = SFShareResponseStateSuccess;
+            shareResponse.responseState = HYJShareResponseStateSuccess;
             shareResponse.responseMsg = @"weibo share success";
             
         }else if(res.statusCode == WeiboSDKResponseStatusCodeUserCancel) {
-            shareResponse.responseState = SFShareResponseStateCancel;
+            shareResponse.responseState = HYJShareResponseStateCancel;
             shareResponse.responseMsg = @"weibo share cancel";
         }else {
-            SFLogDebug(@"response.statusCode:%ld",(long)res.statusCode);
-            shareResponse.responseState = SFShareResponseStateFail;
+            NSLog(@"response.statusCode:%ld",(long)res.statusCode);
+            shareResponse.responseState = HYJShareResponseStateFail;
             shareResponse.responseMsg = @"weibo share failed";
         }
         //
     }else if([response isKindOfClass:[WBAuthorizeResponse class]]) {
-        SFLogDebug(@"%@",response);
+        NSLog(@"%@",response);
     }
     //
     if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveShareResponse:)]) {
@@ -340,7 +339,7 @@
     }
     
     switch (shareModel.modelType) {
-        case SFShareModelText:
+        case HYJShareModelText:
         {
             SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
             req.bText = YES;
@@ -349,7 +348,7 @@
             [WXApi sendReq:req];
             break;
         }
-        case SFShareModelPic:
+        case HYJShareModelPic:
         {
             WXMediaMessage *message = [WXMediaMessage message];
             HYJShareImageModel *imageModel = (HYJShareImageModel *)shareModel.mediaModel;
@@ -389,7 +388,7 @@
             
             break;
         }
-        case SFShareModelWebpage:
+        case HYJShareModelWebpage:
         {
             WXMediaMessage *message = [WXMediaMessage message];
             HYJShareWebPageModel *webpageModel = (HYJShareWebPageModel *)shareModel.mediaModel;
@@ -411,7 +410,7 @@
 
             break;
         }
-        case SFShareModelVideo:
+        case HYJShareModelVideo:
         {
             WXMediaMessage *message = [WXMediaMessage message];
             //视频~
@@ -440,7 +439,7 @@
 
 - (void)showToast:(NSString *)message {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [UIToastView showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+    [HYJShareUI showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
 }
 
 #pragma mark  WXApi Delegate
@@ -458,15 +457,15 @@
         int responseCode = resp.errCode;
         if (responseCode == WXSuccess) {
             //
-            shareResponse.responseState = SFShareResponseStateSuccess;
+            shareResponse.responseState = HYJShareResponseStateSuccess;
             shareResponse.responseMsg = @"wechat share success";
         }else if (responseCode == WXErrCodeUserCancel) {
             //
-            shareResponse.responseState = SFShareResponseStateCancel;
+            shareResponse.responseState = HYJShareResponseStateCancel;
             shareResponse.responseMsg = @"wechat share cancel";
         }else {
-            SFLogDebug(@"errCode:%d,errStr:%@",responseCode,resp.errStr);
-            shareResponse.responseState = SFShareResponseStateFail;
+            NSLog(@"errCode:%d,errStr:%@",responseCode,resp.errStr);
+            shareResponse.responseState = HYJShareResponseStateFail;
             //返回微信的错误提示字符串
             shareResponse.responseMsg = resp.errStr;
         }
@@ -498,7 +497,7 @@
         return;
     }
     //功能支持验证~
-    if (shareType== SFShareTypeQQZone && (shareModel.modelType==SFShareModelText ||shareModel.modelType==SFShareModelPic)) {
+    if (shareType== HYJShareTypeQQZone && (shareModel.modelType==HYJShareModelText ||shareModel.modelType==HYJShareModelPic)) {
         [[HYJShareUI sharedInstance] cancelAction];
         //
         [self performSelector:@selector(showToast:) withObject:@"QQ空间暂不支持文字、图片分享！" afterDelay:0.2];
@@ -506,7 +505,7 @@
     }
     //
     switch (shareModel.modelType) {
-        case SFShareModelText:
+        case HYJShareModelText:
         {
             QQApiTextObject *textObj = [QQApiTextObject objectWithText:shareModel.text];
             
@@ -514,7 +513,7 @@
             
             break;
         }
-        case SFShareModelPic:
+        case HYJShareModelPic:
         {
             if ([shareModel.mediaModel isKindOfClass:[HYJShareImageModel class]]) {
                 HYJShareImageModel *imageModel = (HYJShareImageModel *)shareModel.mediaModel;
@@ -541,7 +540,7 @@
             
             break;
         }
-        case SFShareModelWebpage:
+        case HYJShareModelWebpage:
         {
             if ([shareModel.mediaModel isKindOfClass:[HYJShareWebPageModel class]]) {
                 HYJShareWebPageModel *webpageModel = (HYJShareWebPageModel *)shareModel.mediaModel;
@@ -553,7 +552,7 @@
             
             break;
         }
-        case SFShareModelVideo:
+        case HYJShareModelVideo:
         {
             //QQApiVideoObject类型的分享，目前在Android和PC QQ上接收消息时，展现有待完善，待手机QQ版本以后更新支持~目前如果要分享视频，推荐使用 QQApiNewsObject 类型
             if ([shareModel.mediaModel isKindOfClass:[HYJShareVideoModel class]]) {
@@ -573,7 +572,7 @@
 
 - (void)showToast:(NSString *)message {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [UIToastView showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+    [HYJShareUI showToastViewWithContent:message andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
 }
 
 - (void)reqQQWithObject:(QQApiObject *)obj shareType:(HYJShareType)shareType {
@@ -581,13 +580,13 @@
     QQApiSendResultCode resultCode;
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:obj];
     
-    if (shareType == SFShareTypeQQFriend) {
+    if (shareType == HYJShareTypeQQFriend) {
         resultCode = [QQApiInterface sendReq:req];
     }else {
         resultCode = [QQApiInterface SendReqToQZone:req];
     }
     
-    SFLogDebug(@"QQApiSendResultCode:%d",resultCode);
+    NSLog(@"QQApiSendResultCode:%d",resultCode);
 }
 
 #pragma mark qq delegate~
@@ -618,21 +617,21 @@
  */
 - (void)onResp:(QQBaseResp *)resp {
     
-    SFLogDebug(@"resp.type:%d,resp.result:%@,resp.errorDescription:%@",resp.type,resp.result,resp.errorDescription);
+    NSLog(@"resp.type:%d,resp.result:%@,resp.errorDescription:%@",resp.type,resp.result,resp.errorDescription);
 
     HYJShareResponse *shareResponse = [[HYJShareResponse alloc] init];
     if (resp.type == ESHOWMESSAGEFROMQQREQTYPE) {
         if (resp.result.integerValue == 0) { //成功
             //
-            shareResponse.responseState = SFShareResponseStateSuccess;
+            shareResponse.responseState = HYJShareResponseStateSuccess;
             shareResponse.responseMsg = @"qq share success";
         }else if(resp.result.integerValue == -4) { //取消
             //
-            shareResponse.responseState = SFShareResponseStateCancel;
+            shareResponse.responseState = HYJShareResponseStateCancel;
             shareResponse.responseMsg = @"qq share cancel";
         }else { //失败
-            SFLogDebug(@"errCode:%@,errStr:%@",resp.result,resp.errorDescription);
-            shareResponse.responseState = SFShareResponseStateFail;
+            NSLog(@"errCode:%@,errStr:%@",resp.result,resp.errorDescription);
+            shareResponse.responseState = HYJShareResponseStateFail;
             //返回qq的错误提示字符串
             shareResponse.responseMsg = resp.errorDescription;
         }
@@ -651,74 +650,74 @@
 @end
 
 
-#pragma mark - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#pragma mark - HYJSMSShareManager
-
-@implementation HYJSMSShareManager
-
-- (void)shareSMSWithDataModel:(HYJShareModel *)shareModel {
-    
-    Class messageClass = (NSClassFromString(@"MFMessageComposeViewController"));
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    //Check whether the current device is configured for sending SMS messages
-    if (![self checkDevice:@"iPhone"] || !messageClass || ![messageClass canSendText]) {
-        [UIToastView showToastViewWithContent:@"设备不支持发短信功能！" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
-        return;
-    }
-    
-    // 设置导航栏的颜色及标题颜色
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    [UINavigationBar appearance].titleTextAttributes =@{NSForegroundColorAttributeName:[UIColor blackColor]};
-    //
-    MFMessageComposeViewController *smspicker = [[MFMessageComposeViewController alloc] init];
-    smspicker.messageComposeDelegate = (id<MFMessageComposeViewControllerDelegate>)self;
-    //设置短信分享的内容
-    smspicker.body = shareModel.text;
-
-    AppDelegate *appdelegate = [UIApplication sharedApplication].delegate;
-    [appdelegate.navigationController presentViewController:smspicker animated:YES completion:nil];
-    
-}
-
-#pragma mark sms delegate~
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    //
-    AppDelegate *appdelegate = [UIApplication sharedApplication].delegate;
-    [appdelegate.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-    HYJShareResponse *shareResponse = [[HYJShareResponse alloc] init];
-
-    if (result == MessageComposeResultSent) {
-        //
-        shareResponse.responseState = SFShareResponseStateSuccess;
-        shareResponse.responseMsg = @"sms share success";
-    }else if (result == MessageComposeResultCancelled) {
-        //
-        shareResponse.responseState = SFShareResponseStateCancel;
-        shareResponse.responseMsg = @"sms share cancel";
-    }else {
-        SFLogDebug(@"%d",result);
-        shareResponse.responseState = SFShareResponseStateFail;
-        //返回微信的错误提示字符串
-        shareResponse.responseMsg = @"sms share failed";
-    }
-    //
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveShareResponse:)]) {
-        [self.delegate didReceiveShareResponse:shareResponse];
-    }
-    
-}
-
-///判断是否是iphone~yes:是，no:不是
--(bool)checkDevice:(NSString*)name {
-    
-    NSString* deviceModel = [UIDevice currentDevice].model;
-    return [deviceModel rangeOfString:name].location != NSNotFound;
-}
-
-@end
+//#pragma mark - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//#pragma mark - HYJSMSShareManager
+//
+//@implementation HYJSMSShareManager
+//
+//- (void)shareSMSWithDataModel:(HYJShareModel *)shareModel {
+//    
+//    Class messageClass = (NSClassFromString(@"MFMessageComposeViewController"));
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    
+//    //Check whether the current device is configured for sending SMS messages
+//    if (![self checkDevice:@"iPhone"] || !messageClass || ![messageClass canSendText]) {
+//        [HYJShareUI showToastViewWithContent:@"设备不支持发短信功能！" andRect:CGRectMake((kScreenViewWidth - 200)/2, (kScreenViewHeight - 200)/2, 200, 50) andTime:1.5f andObjectView:window];
+//        return;
+//    }
+//    
+//    // 设置导航栏的颜色及标题颜色
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+//    [[UINavigationBar appearance] setTranslucent:NO];
+//    [UINavigationBar appearance].titleTextAttributes =@{NSForegroundColorAttributeName:[UIColor blackColor]};
+//    //
+//    MFMessageComposeViewController *smspicker = [[MFMessageComposeViewController alloc] init];
+//    smspicker.messageComposeDelegate = (id<MFMessageComposeViewControllerDelegate>)self;
+//    //设置短信分享的内容
+//    smspicker.body = shareModel.text;
+//
+//    AppDelegate *appdelegate = [UIApplication sharedApplication].delegate;
+//    [appdelegate.navigationController presentViewController:smspicker animated:YES completion:nil];
+//    
+//}
+//
+//#pragma mark sms delegate~
+//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+//    //
+//    AppDelegate *appdelegate = [UIApplication sharedApplication].delegate;
+//    [appdelegate.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    
+//    HYJShareResponse *shareResponse = [[HYJShareResponse alloc] init];
+//
+//    if (result == MessageComposeResultSent) {
+//        //
+//        shareResponse.responseState = HYJShareResponseStateSuccess;
+//        shareResponse.responseMsg = @"sms share success";
+//    }else if (result == MessageComposeResultCancelled) {
+//        //
+//        shareResponse.responseState = HYJShareResponseStateCancel;
+//        shareResponse.responseMsg = @"sms share cancel";
+//    }else {
+//        NSLog(@"%d",result);
+//        shareResponse.responseState = HYJShareResponseStateFail;
+//        //返回微信的错误提示字符串
+//        shareResponse.responseMsg = @"sms share failed";
+//    }
+//    //
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveShareResponse:)]) {
+//        [self.delegate didReceiveShareResponse:shareResponse];
+//    }
+//    
+//}
+//
+/////判断是否是iphone~yes:是，no:不是
+//-(bool)checkDevice:(NSString*)name {
+//    
+//    NSString* deviceModel = [UIDevice currentDevice].model;
+//    return [deviceModel rangeOfString:name].location != NSNotFound;
+//}
+//
+//@end
 
 
 #pragma mark - HYJShareResponse
