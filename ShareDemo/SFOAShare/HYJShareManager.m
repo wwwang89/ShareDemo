@@ -59,7 +59,6 @@
 //    [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:SinaWeiBoAppKey];
     //向微信注册
-    
     [WXApi registerApp:WeChatAppID];
     //qq注册
     TencentOAuth *tencentOAuth = [[TencentOAuth alloc] initWithAppId:QQAppID andDelegate:nil];
@@ -73,7 +72,6 @@
     self.dataModel = shareModel;
     //初始化各个shareManager:
     [self initShareManagers];
-    
     //获取回调内容~
     [HYJShareUI sharedInstance].delegate = (id<HYJShareUIDelegate>)self;
     //创建分享窗口~
