@@ -16,10 +16,12 @@
  */
 #define SinaWeiBoAppKey         @"2045436852"
 
+
 /** 微信
  *
  */
 #define WeChatAppID             @"wxd930ea5d5a258f4f"
+
 
 /** qq~
  *
