@@ -12,22 +12,19 @@
 #define kScreenViewWidth                            [UIScreen mainScreen].bounds.size.width
 
 /** 新浪~
- App Key：1946642536
- App Secret：9d9a84f89922427d95c7239f8c69c2a8
+ *
  */
-#define SinaWeiBoAppKey         @"1946642536"
+#define SinaWeiBoAppKey         @"2045436852"
 
 /** 微信
- AppID：wx89f8c82f07f15063
- AppSecret：d4624c36b6795d1d99dcf0547af5443d
+ *
  */
-#define WeChatAppID             @"wx89f8c82f07f15063"
+#define WeChatAppID             @"wxd930ea5d5a258f4f"
 
 /** qq~
- APP ID:1104934496
- APP KEY:iLK8C2E6SzpW7ZGj
+ *
  */
-#define QQAppID                 @"1104934496"
+#define QQAppID                 @"222222"
 
 
 typedef NS_ENUM(NSUInteger, HYJShareType) {

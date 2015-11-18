@@ -354,6 +354,16 @@ static const NSInteger kShateSeperateLineMargin = 9;
     
 }
 
+///
++ (void)removeToastViewFromParentView:(id)sender
+{
+    UIView * parentView = (UIView *)sender;
+    UIView * toastView = [parentView viewWithTag:1234554321];
+    [toastView removeFromSuperview];
+    toastView = nil;
+    
+}
+
 
 
 
