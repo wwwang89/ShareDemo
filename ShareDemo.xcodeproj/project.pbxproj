@@ -101,8 +101,6 @@
 		2C7370EF1BF09D79002A322B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C7370F81BF09D79002A322B /* ShareDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDemoTests.m; sourceTree = "<group>"; };
 		2C7370FA1BF09D79002A322B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2C7371031BF09D79002A322B /* ShareDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDemoUITests.m; sourceTree = "<group>"; };
-		2C7371051BF09D79002A322B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,7 +234,6 @@
 				2C04D0781BF1F46F001827BE /* Frameworks */,
 				2C7370DD1BF09D79002A322B /* ShareDemo */,
 				2C7370F71BF09D79002A322B /* ShareDemoTests */,
-				2C7371021BF09D79002A322B /* ShareDemoUITests */,
 				2C7370DC1BF09D79002A322B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -281,15 +278,6 @@
 				2C7370FA1BF09D79002A322B /* Info.plist */,
 			);
 			path = ShareDemoTests;
-			sourceTree = "<group>";
-		};
-		2C7371021BF09D79002A322B /* ShareDemoUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2C7371031BF09D79002A322B /* ShareDemoUITests.m */,
-				2C7371051BF09D79002A322B /* Info.plist */,
-			);
-			path = ShareDemoUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

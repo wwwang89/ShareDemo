@@ -62,6 +62,7 @@
     shareModel.modelType = HYJShareModelWebpage;
     [[HYJShareManager sharedInstance] shareWithDataModel:shareModel];
 
+
 }
 
 
